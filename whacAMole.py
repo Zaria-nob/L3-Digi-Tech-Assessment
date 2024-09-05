@@ -17,7 +17,7 @@ class Whack_a_mole(QWidget):
         self.number_of_turns = 0
         self.game_ended = False
         #creates button for mole
-        self.mole_button = QPushButton("Mole", self)
+    
         self.init_ui()
     
     #Function to set up grid
@@ -39,25 +39,13 @@ class Whack_a_mole(QWidget):
                 button.setFixedSize(100,100)
                 #button.clicked.connect(lambda ch, row=row, col=col: self.on_click(row, col))
                 self.grid.addWidget(button, row, col)
-
-
-
-    def mole(self):
-        #sets position and dimensions of the mole
-        self.setGeometry(200, 200, 90, 90)
-        
-        #makes mole move once clicked
-        self.mole_button.clicked.connect(self.on_click)
-
-
+    
 
     def on_click(self, row, col):
         #print(f'Button at ({row}, {col}) clicked')
         button = self.sender()
         self.number_of_turns += 1
         self.mole_button = self.setGeometry(random.randint())
-
-        
 
             
 
@@ -66,6 +54,30 @@ class Whack_a_mole(QWidget):
         print('Game Over')
         file = open('file.txt', 'w')
         file.close()
+
+
+
+
+class Mole(QWidget):
+    def __init__(self):
+        #creates button for mole
+        self.mole = QPushButton()
+
+
+
+    def mole_setup(self):
+        #sets position and dimensions of the mole
+        self.setGeometry(200, 200, 90, 90)
+        
+        #makes mole move once clicked
+        self.mole_button.clicked.connect(self.on_click)
+
+
+    def mole_move():
+        #sets original position for the mole
+        #makes the mole move randomly between the squares in the grid once clicked.
+        
+
 
 
 # Makes sure it is running the Main code

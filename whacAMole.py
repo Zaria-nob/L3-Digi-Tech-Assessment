@@ -1,19 +1,23 @@
 #print("hello world")
 
 import sys
+import random
 # * imports all functions from that library
-from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton, QInputDialog, QMessageBox
+from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton, QInputDialog, QMessageBox, QLabel
 from PyQt5.QtCore import QTimer
 from PyQt5.QtGui import *
 
-class ButtonGrid(QWidget):
+class Whack_a_mole(QWidget):
     #This function has all the variables in it and initializes the code
     def __init__(self):
         super().__init__()
+        #Creates variables for the rows, columns, and turns
         self.number_of_rows = 3
         self.number_of_cols = 3
         self.number_of_turns = 0
         self.game_ended = False
+        #creates button for mole
+        self.mole_button = QPushButton("Mole", self)
         self.init_ui()
     
     #Function to set up grid
@@ -33,14 +37,28 @@ class ButtonGrid(QWidget):
             for col in range(self.number_of_cols):
                 button = self.buttons[row][col]
                 button.setFixedSize(100,100)
-                button.clicked.connect(lambda ch, row=row, col=col: self.button_clicked(row, col))
+                #button.clicked.connect(lambda ch, row=row, col=col: self.on_click(row, col))
                 self.grid.addWidget(button, row, col)
 
 
-    def button_clicked(self, row, col):
-        print(f'Button at ({row}, {col}) clicked')
+
+    def mole(self):
+        #sets position and dimensions of the mole
+        self.setGeometry(200, 200, 90, 90)
+        
+        #makes mole move once clicked
+        self.mole_button.clicked.connect(self.on_click)
+
+
+
+    def on_click(self, row, col):
+        #print(f'Button at ({row}, {col}) clicked')
         button = self.sender()
         self.number_of_turns += 1
+        self.mole_button = self.setGeometry(random.randint())
+
+        
+
             
 
     def end_game(self):
@@ -57,7 +75,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
 
     # Create a main application window (QWidget)
-    window = ButtonGrid()
+    window = Whack_a_mole()
     window.show()
     # Execute the application's event loop
     sys.exit(app.exec_())

@@ -23,13 +23,13 @@ class Whack_a_mole(QWidget):
     
     #Function to set up grid
     def init_ui(self):
-        #This creates the name and dimensions of the window
+        #creates the name and dimensions of the window
         self.setWindowTitle('Whack-A-Mole')
         self.setGeometry(300,200,350,400)
 
         self.layout = QVBoxLayout()
 
-        #this creates the pop up box for the time limit
+        #creates the pop up box for the time limit
         self.score_label = QLabel(f'Score: {self.score}', self)
         self.layout.addWidget(self.score_label)
 
@@ -39,7 +39,7 @@ class Whack_a_mole(QWidget):
             #closes the program if input was cancelled
             self.close()
     
-        #this starts the timer and times it by 1000 to convert it to seconds.
+        #this starts the timer and multuplies the input by 1000 to convert to seconds.
         QTimer.singleShot(self.time_limit * 1000, self.end_game)
 
         #creates the grid for the main game
@@ -69,13 +69,13 @@ class Whack_a_mole(QWidget):
         self.mole_timer.start(1000)
 
 
-
+    #function to make the mole move randomly
     def mole_move(self):
         #sets original position for the mole
         if self.mole_position != (-1,-1):
             self.buttons[self.mole_position].setText('')
         
-        #makes the mole move randomly between the squares in the grid once clicked.
+        #makes the mole move randomly between squares in the grid once clicked.
         self.mole_position = (random.randint(0, 2), random.randint(0, 2))
         self.buttons[self.mole_position].setText('Mole!')
         
@@ -89,19 +89,22 @@ class Whack_a_mole(QWidget):
             self.score_label.setText(f'Score: {self.score}')
             self.buttons[self.mole_position].setText('')
         else:
-            #Prints in the terminal when the player misses a mole
+            #Prints in terminal when player misses a mole
             print('you missed the mole')
 
 
 
+    #stops everything once the timer is up and uploads the score to the file
     def end_game(self):
         #stops moving the mole
         self.mole_timer.stop()
         #shows the final score in a pop up window
         QMessageBox.information(self, 'Game Over',  f'Game Over! You got a score of {self.score}')
         print('Game Over')
+        #opens file and writes the score in it
         file = open('file.txt', 'w')
-        #closes file
+        file.write(str(self.score))
+        
         file.close()
         
 
